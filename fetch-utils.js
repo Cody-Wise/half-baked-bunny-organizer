@@ -13,7 +13,7 @@ export async function getFamilies() {
     const response = await client
         .from('loving_families')
         .select('*, fuzzy_bunnies (*)')
-        .match({ 'fuzzy_bunnies.user.id': client.auth.session().user.id });
+        .match({ 'fuzzy_bunnies.user_id': client.auth.session().user.id });
 
     return checkError(response);
 }
@@ -35,8 +35,8 @@ export async function createBunny(bunny) {
     const response = await client
         .from('fuzzy_bunnies')
         .insert({
-            bunny,
-            user_id: client.auth.session().user.id
+            name: bunny.name,
+            family_id: bunny.family_id
         });
 
     // create a bunny using the bunny argument
