@@ -2,15 +2,16 @@ import {
     createBunny, 
     getFamilies, 
     checkAuth, 
-    logout 
+    logout, 
 } from '../fetch-utils.js';
 
 const form = document.querySelector('.bunny-form');
 const logoutButton = document.getElementById('logout');
 
+
+
 form.addEventListener('submit', async e => {
     e.preventDefault();
-    console.log(e.target.value);
 
     // prevent default
     const data = new FormData(form);
@@ -45,6 +46,7 @@ window.addEventListener('load', async () => {
         const option = document.createElement('option');
         option.value = family.id;
         option.textContent = family.name;
+        
 
         select.append(option);
     }

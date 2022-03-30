@@ -44,6 +44,34 @@ export async function createBunny(bunny) {
     return checkError(response);
 }
 
+export async function updateBunny(id, name, family_id){
+    const response = await client
+        .from('fuzzy_bunnies')
+        .update({
+            name: name,
+            family_id: family_id,
+        })
+        .match({ id: id });
+
+    return response.body;
+}
+
+export async function oneBunny(id) {
+
+    const response = await client
+        .from('fuzzy_bunnies')
+        .select('*')
+        .match ({ id })
+        .single();
+
+
+    // create a bunny using the bunny argument
+
+    return checkError(response);
+}
+
+
+
 // MARTHA STEWART (PRE-MADE) FUNCTIONS
 
 export async function checkAuth() {
