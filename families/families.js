@@ -46,6 +46,7 @@ async function displayFamilies(families) {
         nameEl.textContent = family.name;
         for (let bunny of family.fuzzy_bunnies){
             const bunnyEl = document.createElement('div');
+            bunnyEl.id = bunny.id;
             bunnyEl.setAttribute('draggable', true);
             bunnyEl.setAttribute('ondragstart', "event.dataTransfer.setData('text/plain',null)");
             bunnyEl.classList.add('bunny');
@@ -100,6 +101,7 @@ async function displayFamilies(families) {
 
     document.addEventListener('drop', function(event) {
         // prevent default action (open as link for some elements)
+        console.log(event);
         event.preventDefault();
         // move dragged elem to the selected drop target
         if (event.target.className === 'family') {
