@@ -5,6 +5,20 @@ checkAuth();
 const familiesEl = document.querySelector('.families-container');
 const logoutButton = document.getElementById('logout');
 
+// function allowDrop(ev) {
+//     ev.preventDefault();
+// }
+  
+// function drag(ev) {
+//     ev.dataTransfer.setData('text', ev.target.id);
+// }
+  
+// function drop(ev) {
+//     ev.preventDefault();
+//     const data = ev.dataTransfer.getData('text');
+//     ev.target.appendChild(document.getElementById(data));
+// }
+
 logoutButton.addEventListener('click', () => {
     logout();
 });
@@ -20,15 +34,20 @@ async function displayFamilies(families) {
     for (let family of families) {
         // create three elements for each family, one for the whole family, one to hold the name, and one to hold the bunnies
         const familyEl = document.createElement('div');
+        // familyEl.setAttribute('ondrop', drop(event));
+        // familyEl.setAttribute('ondragover', allowDrop(event));
         const nameEl = document.createElement('h3');
         const bunniesEl = document.createElement('div');
+
         
-        console.log(family);
+        
         familyEl.classList.add('family');
         bunniesEl.classList.add('bunnies');
         nameEl.textContent = family.name;
         for (let bunny of family.fuzzy_bunnies){
             const bunnyEl = document.createElement('div');
+            bunnyEl.setAttribute('draggable', true);
+            bunnyEl.setAttribute('ondragstart', "event.dataTransfer.setData('text/plain',null)");
             bunnyEl.classList.add('bunny');
             bunnyEl.textContent = bunny.name;
 
@@ -58,6 +77,38 @@ async function displayFamilies(families) {
 
         
     }
+    let dragged;
+    document.addEventListener('drag', function() {
+        
+
+
+
+    }, false);
+    document.addEventListener('dragstart', (e) => {
+        dragged = e.target;
+
+    });
+    document.addEventListener('dragend', (e) => {
+        e.preventDefault();
+    });
+
+    document.addEventListener('dragover', function(event) {
+        // prevent default to allow drop
+        event.preventDefault();
+    }, false);
+
+
+    document.addEventListener('drop', function(event) {
+        // prevent default action (open as link for some elements)
+        event.preventDefault();
+        // move dragged elem to the selected drop target
+        if (event.target.className === 'family') {
+            event.target.style.background = '';
+            dragged.parentNode.removeChild(dragged);
+            event.target.appendChild(dragged);
+        }
+      
+    }, false);
 
     // append the bunniesEl and nameEl to the familyEl
 
