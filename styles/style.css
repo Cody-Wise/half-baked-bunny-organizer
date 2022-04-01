@@ -148,6 +148,7 @@ footer {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    
 }
 
 .family {
@@ -155,22 +156,27 @@ footer {
     margin: 10px;
     border: solid 1px black;
     padding: 10px;
+  min-height: 100px;
+    
 }
 
 .family h3 {
     margin: 0;
+    /* display: block; */
 }
 
 .bunnies {
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
 }
 
 .bunny {
     margin: 3px;
     padding: 3px;
+    width: max-content;
     border: dotted 2px magenta;
     cursor: pointer;
+    /* display: flex; */
 }
 
 .bunny-form {

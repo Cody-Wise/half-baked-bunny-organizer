@@ -56,6 +56,17 @@ export async function updateBunny(id, name, family_id){
     return response.body;
 }
 
+export async function updateFamily(id, family_id){
+    const response = await client
+        .from('fuzzy_bunnies')
+        .update({
+            family_id: family_id,
+        })
+        .match({ id: id });
+
+    return response.body;
+}
+
 export async function oneBunny(id) {
 
     const response = await client

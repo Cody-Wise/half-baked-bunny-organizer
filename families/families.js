@@ -1,4 +1,4 @@
-import { checkAuth, getFamilies, logout } from '../fetch-utils.js';
+import { checkAuth, getFamilies, logout, updateFamily } from '../fetch-utils.js';
 
 checkAuth();
 
@@ -34,8 +34,7 @@ async function displayFamilies(families) {
     for (let family of families) {
         // create three elements for each family, one for the whole family, one to hold the name, and one to hold the bunnies
         const familyEl = document.createElement('div');
-        // familyEl.setAttribute('ondrop', drop(event));
-        // familyEl.setAttribute('ondragover', allowDrop(event));
+        familyEl.id = family.id;
         const nameEl = document.createElement('h3');
         const bunniesEl = document.createElement('div');
 
@@ -85,8 +84,11 @@ async function displayFamilies(families) {
 
 
     }, false);
-    document.addEventListener('dragstart', (e) => {
-        dragged = e.target;
+    document.addEventListener('dragstart', (event) => {
+        dragged = event.target;
+        console.log(event);
+
+        event.dataTransfer.setData('text', event.target.id);
 
     });
     document.addEventListener('dragend', (e) => {
@@ -99,7 +101,7 @@ async function displayFamilies(families) {
     }, false);
 
 
-    document.addEventListener('drop', function(event) {
+    document.addEventListener('drop', async function(event) {
         // prevent default action (open as link for some elements)
         console.log(event);
         event.preventDefault();
@@ -109,8 +111,27 @@ async function displayFamilies(families) {
             dragged.parentNode.removeChild(dragged);
             event.target.appendChild(dragged);
         }
-      
+        const elementPlace = event.path.length - 7;
+        const bunnyId = event.dataTransfer.getData('text');
+        const familyId = event.path[elementPlace].id;
+
+        
+
+        console.log(familyId);
+
+        
+        await updateFamily(bunnyId, familyId);
+
+
+        console.log(bunnyId);
     }, false);
+
+   
+
+    
+
+
+    // updateBunny(id, name, family_id)
 
     // append the bunniesEl and nameEl to the familyEl
 
